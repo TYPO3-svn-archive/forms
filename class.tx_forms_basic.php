@@ -24,6 +24,9 @@ class tx_forms_basic {
 	 */
 	function input($attr) {
 		
+		// check for type, and if not there, use 'text'
+		if(!isset($attr['type'])) $attr['type'] = 'text';
+		
 		// implode $attr to add to input tag
 		$attrImploded 	= $this->implodeAttributes($attr);
 		
@@ -104,6 +107,9 @@ class tx_forms_basic {
 		return $beginTag . $optionTags . $endTag;
 	}
 
+	function check($attr) {
+		
+	}
 
 
 //**********************************
