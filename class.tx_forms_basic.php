@@ -10,7 +10,8 @@
 //****************************************************************
 
 // TODO: maybe make templates for tags and use sprintf to insert values
-// TODO: add label?
+// TODO: add labels?
+// TODO: determine whether to append strings with .= or make array, probably latter.
 class tx_forms_basic {
 
 //****************************************
