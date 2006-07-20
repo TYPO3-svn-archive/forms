@@ -10,6 +10,7 @@
 //****************************************************************
 
 // TODO: maybe make templates for tags and use sprintf to insert values
+// TODO: add label?
 class tx_forms_basic {
 
 //****************************************
@@ -128,6 +129,42 @@ class tx_forms_basic {
 		// return it
 		return $checkbox;
 		
+	}
+	
+	/**
+	 * @name radio
+	 * @abstract renders radio buttons
+	 * @param array $attr holds all attributes for each radio tag
+	 * @param string $checked value of the radio button that is to be selected
+	 * @param array $options array of options, or values.
+	 * TODO: see on top, need to figure something out with labels. Maybe only render one radio button?
+	 */
+	function radio($attr, $checked, $options) {
+		
+		// declare output variable
+		$radioTags = array();
+		
+		// loop through all options and render tags
+		foreach($options as $value) {		
+			
+			// make attributes unique for this tag
+			$attrHere = $attr;
+			
+			// if selected, determine that now
+			if($value == $checked) {
+				$attrHere['checked'] = 'checked';	
+			}
+					
+			// get attributes for inclusion
+			$attrHere = $this->implodeAttributes($attrHere);
+			
+			// render tag
+			$radioTags[] = '<input type="radio"' . $attrHere . ' />';
+		
+		}
+		
+		// return it
+		return implode(' ', $radioTags);
 	}
 
 

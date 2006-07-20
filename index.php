@@ -48,4 +48,13 @@ $checked= true;
 echo 'Some label:';
 echo $forms->checkbox($attr, $checked);
 echo '<br />';
+
+// create radiobuttons
+echo '<h3>radio buttons</h3>';
+$attr	 = array('name' => 'radio buttons');
+$checked = 'third';
+$options = array('first', 'second', 'third', 'fourth');
+
+echo $forms->radio($attr, $checked, $options);
+echo '<br />';
 ?>
