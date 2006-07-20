@@ -9,77 +9,127 @@
 //* 
 //****************************************************************
 
-
-class forms {
-
-
-
-
+// TODO: maybe make templates for tags and use sprintf to insert values
+class tx_forms_basic {
 
 //*********************************
 //******** Static methods  ********
 //*********************************
 
-	
-	function input($name, $properties = array()) {
-		$fillContent 	.= "<input type=\"text\" name=\"$name\" value=\"$value\" size=\"$length\" />";
+	/**
+	 * @name input
+	 * @abstract renders a input form
+	 * @param array() $attr associative array that defines the attributes inside the input tag; it's not validated in any way.
+	 * 	
+	 */
+	function input($attr) {
+		
+		// implode $attr to add to input tag
+		$attrImploded 	= $this->implodeAttributes($attr);
+		
+		// build input tag
+		$input		 	= '<input' . $attrImploded . '/>';
 
+		// return tag
+		return $input;
 	}
 
-	function textarea($name, $properties = array()) {
+	/**
+	 * @name textarea
+	 * @abstract renders a textarea form
+	 * @param array() $attr associative array that defines the attributes inside the input tag; it's not validated in any way.
+	 */
+	function textarea($attr, $value) {
 		
-		$fillContent .= "<textarea rows=\"$rows\" cols=\"$cols\" name=\"$name\">$value</textarea>";
+		// implode $attr to add to textarea tag
+		$implodedAttr = $this->implodeAttributes($attr);
 		
+		// build textarea tag
+		$textarea	= '<textarea' . $implodedAttr . '>' . $value . '</textarea>';
+		
+		// return textarea
+		return $textarea;
 	}
 
-
-	function select($name, $properties = array()) {
-		$values = $GLOBALS['TCA']['fe_users']['columns'][$field]['config']['items'];
-		$value  = $GLOBALS['TSFE']->sL($values[$value][0]);
+	/**
+	 * @name select
+	 * @abstract renders a select form
+	 * @param array $selectAttr associative array that defines the attributes inside the select tag; it's not validated in any way.
+	 * @param array $optionsAttr associative array that defines attributes inside the option tags, also not validated. 
+	 * @param mixed $selected array of strings or single string that defines the selected options.
+	 * @param array $options associative array that defines the options as 'value'=>'Text' pairs
+	 */
+	function select($selectAttr, $optionsAttr, $selected, $options) {
 		
-		$fillContent = '<tr><td class="' . $classLeft . '">';
-		$fillContent .= $label;
-		$fillContent .= '</td><td class="' . $classRight . '">';
+		// if the attributes for the option tags is null, make it
+		// an array so implodeAttributes() doesn't complain.
+		if($optionsAttr == null) {
+			$optionsAttr = array();
+		}
 		
-		$fillContent .= "<select name=\"$name\">";
+		// get the attributes for inclusion
+		$selectAttr = $this->implodeAttributes($selectAttr);
+		
+		// build beginning tag
+		$beginTag	= '<select' . $selectAttr . '>';
 	
-		for ($h = 0; $h < sizeof($values); $h++) {
-			$actValue = $GLOBALS['TSFE']->sL($values[$h][0]);
-	
-			if ($actValue == $value) {
-				
-				$fillContent .= "<option value=\"$h\" selected=\"selected\">" . $actValue . "</option>";
-			} else {
-				
-				$fillContent .= "<option value=\"$h\">" . $actValue . "</option>";
+		// declare array that holds all the option tags
+		$optionTags = array();
+		
+		// loop through all the options
+		foreach($options as $value => $text) {
+			
+			// make attributes unique from template given
+			$optionsHere = $optionsAttr;
+			
+			// if the current option tag is the selected, mark it so;
+			// if multiple ones are selected, check array for those.
+			if($selected !== null && $selected == $value) {
+				$optionsHere['selected'] = 'selected';
+			} else if(is_array($selected) && in_array($value, $selected)) {
+				$optionsHere['selected'] = 'selected';
 			}
-		}
-		$fillContent .= '</select>';
-		
-		$fillContent .= '</td></tr>';
-	}
 
-	function check($name, $properties) {		
-		$fillContent = '<tr><td class="' . $classLeft . '">';
-		$fillContent .= $label;
-		$fillContent .= '</td><td class="' . $classRight . '">';
-	
-		if ($value == 1) {
-			$fillContent .= "<input type=\"$type\" name=\"$name\" value=\"1\" size=\"$length\" checked=\"checked\" />";
-		} else {
-			$fillContent .= "<input type=\"$type\" name=\"$name\" value=\"1\" size=\"$length\" />";
+			// get attributes for inclusion
+			$optionsHere = $this->implodeAttributes($optionsHere);
+			
+			// build option tag			
+			$optionTags .= '<option value="' . $value . '"' . $optionsHere . '>' . $text . '</option>'; 
 		}
 		
-		$fillContent .= '</td></tr>';
+		// build end tag
+		$endTag 	= '</select>';
+		
+		// return it all
+		return $beginTag . $optionTags . $endTag;
 	}
 
-	function password($name, $properties) {
-		$fillContent = '<tr><td class="' . $classLeft . '">';
-		$fillContent .= $label;
-		$fillContent .= '</td><td class="' . $classRight . '">';
-		$fillContent .= '<input type="password" name="' . $this->prefixID . '[password1]" value="" size="' . $length . '" id="password1"/><br />';
-		$fillContent .= '<input type="password" name="' . $this->prefixID . '[password2]" value="" size="' . $length . '" id="password2"/>';
-		$fillContent .= '</td></tr>';
+
+
+//**********************************
+//******** Private methods  ********
+//**********************************
+
+	/**
+	 * @name implpdeAttributes
+	 * @abstract Takes an array and makes a space-separated list of parameters to include in the tag; $key = "$value".
+	 * @param array() $params associative array that is imploded
+	 */
+	function implodeAttributes($attr) {
+		
+		// initialize the returned value
+		$implodedAttr = null;
+
+		//loop through $params array and implode
+		foreach($attr as $key => $value) {
+			
+			// add new key-value pair to returned variable
+			$implodedAttr .= ' ' . $key . '="' . $value . '"';
+		}
+		
+		// return the imploded value
+		return $implodedAttr;
+		
 	}
 }
 ?>
