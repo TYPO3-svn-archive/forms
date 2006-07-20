@@ -107,7 +107,26 @@ class tx_forms_basic {
 		return $beginTag . $optionTags . $endTag;
 	}
 
-	function check($attr) {
+	/**
+	 * @name checkbox
+	 * @abstract renders a checkbox
+	 * @param array $attr attributes of the tag
+	 * @param boolean $checked whether or not the checkbox is checked
+	 */
+	function checkbox($attr, $checked = false) {
+		
+		// if it should be checked, do so now, but only if
+		// it hasn't been defined in $attr
+		if($checked && !isset($attr['checked'])) $attr['checked'] = 'checked';
+		
+		// get attributes for inclusion
+		$attr = $this->implodeAttributes($attr);
+		
+		// render tag
+		$checkbox = '<input type="checkbox"' . $attr . ' />';
+		
+		// return it
+		return $checkbox;
 		
 	}
 

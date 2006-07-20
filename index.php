@@ -40,4 +40,12 @@ $value 	= 'This is some example text for this great textarea!!!';
 
 echo $forms->textarea($attr, $value);
 echo '<br />';
+
+// create checkbox
+echo '<h3>checkbox</h3>';
+$attr	= array('name' => 'checkbox');
+$checked= true;
+echo 'Some label:';
+echo $forms->checkbox($attr, $checked);
+echo '<br />';
 ?>
