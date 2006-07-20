@@ -12,9 +12,9 @@
 // TODO: maybe make templates for tags and use sprintf to insert values
 class tx_forms_basic {
 
-//*********************************
-//******** Static methods  ********
-//*********************************
+//****************************************
+//******** form building methods  ********
+//****************************************
 
 	/**
 	 * @name input
