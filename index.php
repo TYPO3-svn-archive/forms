@@ -7,6 +7,11 @@
 include('class.tx_forms_basic.php');
 $forms 	= new tx_forms_basic;
 
+echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml11.dtd">' .
+	'<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" dir="ltr">';
+echo '<head><title>Tag Test</title></head>';
+echo '<body>';
+echo '<div>';
 // create input tag
 echo '<h3>input tag [text]</h3>';
 $attr 	= array('name' => 'texttest', 'type' => 'text');
@@ -35,7 +40,7 @@ echo '<br />';
 
 // create textarea
 echo '<h3>textarea</h3>';
-$attr 	= array('name' => 'textarea', 'multiple'=>'multiple', 'cols'=> 25, 'rows'=> 10);
+$attr 	= array('name' => 'textarea', 'cols'=> 25, 'rows'=> 10);
 $value 	= 'This is some example text for this great textarea!!!';
 
 echo $forms->textarea($attr, $value);
@@ -57,4 +62,7 @@ $options = array('first', 'second', 'third', 'fourth');
 
 echo $forms->radio($attr, $checked, $options);
 echo '<br />';
+
+
+echo '</div></body></html>';
 ?>
