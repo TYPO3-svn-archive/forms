@@ -183,6 +183,42 @@ class tx_forms_basic {
 		// return it
 		return $radioTags;
 	}
+	
+	/**
+	 * @name password
+	 * @abstract renders a password form
+	 * @param array() $attr associative array that defines the attributes inside the password tag; it's not validated in any way.
+	 * 	
+	 */
+	function password($attr) {
+		
+		// implode $attr to add to input tag
+		$attrImploded 	= $this->implodeAttributes($attr);
+		
+		// build input tag
+		$password	 	= sprintf($this->tags['password'], $attrImploded);
+
+		// return tag
+		return $password;
+	}
+	
+	/**
+	 * @name hidden
+	 * @abstract renders a hidden form
+	 * @param array() $attr associative array that defines the attributes inside the hidden tag; it's not validated in any way.
+	 * 	
+	 */
+	function hidden($attr) {
+
+		// implode $attr to add to input tag
+		$attrImploded 	= $this->implodeAttributes($attr);
+		
+		// build input tag
+		$hidden		 	= sprintf($this->tags['hidden'], $attrImploded);
+
+		// return tag
+		return $hidden;
+	}
 
 
 //**********************************

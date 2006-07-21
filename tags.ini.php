@@ -20,3 +20,9 @@ checkbox = "<input type="checkbox" %s />"
 
 ; radio button tag
 radio = "<input type="radio" %s />"
+
+; password tag
+password = "<input type="password" %s />"
+
+; hidden tag
+hidden = "<input type="hidden" %s />"
