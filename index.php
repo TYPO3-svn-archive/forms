@@ -56,11 +56,38 @@ echo '<br />';
 
 // create radiobuttons
 echo '<h3>radio buttons</h3>';
-$attr	 = array('name' => 'radio buttons');
+$attr	 = array('name' => 'radio_buttons');
 $checked = 'third';
 $options = array('first', 'second', 'third', 'fourth');
 
 echo $forms->radio($attr, $checked, $options);
+echo '<br />';
+
+// create password field
+echo '<h3>password field</h3>';
+$attr	 = array('name' => 'password', 'value'=>'somePass');
+echo $forms->password($attr);
+echo '<br />';
+
+// create hidden field
+echo '<h3>hidden field (check source, obviously :))</h3>';
+$attr	 = array('name' => 'hidden', 'value'=>'someHiddenValue');
+echo $forms->hidden($attr);
+echo '<br />';
+
+// create custom tag field
+echo '<h3>custom tag with closing tag</h3>';
+$tag 	= 'div';
+$attr	= array('id' => 'someDiv');
+$filling= 'Content between the tags';
+echo $forms->tag($tag, $attr, $filling);
+echo '<br />';
+
+// create custom tag field
+echo '<h3>custom tag, self enclosed</h3>';
+$tag 	= 'a';
+$attr	= array('href' => 'www.somewhere.com');
+echo $forms->tag($tag, $attr);
 echo '<br />';
 
 

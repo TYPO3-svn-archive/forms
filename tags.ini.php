@@ -26,3 +26,9 @@ password = "<input type="password" %s />"
 
 ; hidden tag
 hidden = "<input type="hidden" %s />"
+
+; general tag, not self enclosed
+tag = "<%1$s %2$s>%3$s</%1$s>"
+
+; general tag, self enclosed
+tagse = "<%s %s />"

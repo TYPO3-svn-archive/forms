@@ -10,6 +10,7 @@
 //****************************************************************
 
 // TODO: add labels?
+// TODO: file form
 class tx_forms_basic {
 	
 	var $tags;		// associative array of form tags
@@ -187,7 +188,7 @@ class tx_forms_basic {
 	/**
 	 * @name password
 	 * @abstract renders a password form
-	 * @param array() $attr associative array that defines the attributes inside the password tag; it's not validated in any way.
+	 * @param array $attr associative array that defines the attributes inside the password tag; it's not validated in any way.
 	 * 	
 	 */
 	function password($attr) {
@@ -205,7 +206,7 @@ class tx_forms_basic {
 	/**
 	 * @name hidden
 	 * @abstract renders a hidden form
-	 * @param array() $attr associative array that defines the attributes inside the hidden tag; it's not validated in any way.
+	 * @param array $attr associative array that defines the attributes inside the hidden tag; it's not validated in any way.
 	 * 	
 	 */
 	function hidden($attr) {
@@ -218,6 +219,33 @@ class tx_forms_basic {
 
 		// return tag
 		return $hidden;
+	}
+	
+	/**
+	 * @name tag
+	 * @abstract renders a general tag
+	 * @param string $tag name of the tag (i.e. a,div, etc).
+	 * @param array $attr associative array that defines the attributes inside the tag; it's not validated in any way.
+	 * @param string $filling if set, the tag will have an end tag with the $filling in between.
+	 */
+	function tag($tag, $attr = array(), $filling = null) {
+		
+		// make sure $attr is an array
+		if (!is_array($attr))
+			$attr = array ();
+		
+		// get attributes for inclusion
+		$implodedAttr = $this->implodeAttributes($attr);
+		
+		// check whether or not the tag should be self enclosed
+		if($filling != null) {
+			$tag = sprintf($this->tags['tag'], $tag, $implodedAttr, $filling);
+		} else {
+			$tag = sprintf($this->tags['tagse'], $tag, $implodedAttr);
+		}
+		
+		// return it
+		return $tag;
 	}
 
 
@@ -239,7 +267,7 @@ class tx_forms_basic {
 		foreach($attr as $key => $value) {
 			
 			// add new key-value pair to returned variable
-			$implodedAttr .= ' ' . $key . '="' . $value . '"';
+			$implodedAttr .= $key . '="' . $value . '" ';
 		}
 		
 		// return the imploded value
