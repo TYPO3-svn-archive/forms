@@ -31,7 +31,7 @@ class tx_forms_basic {
 	/**
 	 * @name input
 	 * @abstract renders a input form
-	 * @param array() $attr associative array that defines the attributes inside the input tag; it's not validated in any way.
+	 * @param array $attr associative array that defines the attributes inside the input tag; it's not validated in any way.
 	 * 	
 	 */
 	function input($attr) {
@@ -52,7 +52,7 @@ class tx_forms_basic {
 	/**
 	 * @name textarea
 	 * @abstract renders a textarea form
-	 * @param array() $attr associative array that defines the attributes inside the input tag; it's not validated in any way.
+	 * @param array $attr associative array that defines the attributes inside the input tag; it's not validated in any way.
 	 */
 	function textarea($attr, $value) {
 		
