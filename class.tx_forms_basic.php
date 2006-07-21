@@ -9,11 +9,21 @@
 //* 
 //****************************************************************
 
-// TODO: maybe make templates for tags and use sprintf to insert values
 // TODO: add labels?
-// TODO: determine whether to append strings with .= or make array, probably latter.
 class tx_forms_basic {
+	
+	var $tags;		// associative array of form tags
 
+//****************************************
+//************ constructor  **************
+//****************************************
+
+	function tx_forms_basic() {
+		
+		// get tags out of the template file
+		$this->tags = $this->readConfig('tags.ini.php');
+	}
+	
 //****************************************
 //******** form building methods  ********
 //****************************************
@@ -33,7 +43,7 @@ class tx_forms_basic {
 		$attrImploded 	= $this->implodeAttributes($attr);
 		
 		// build input tag
-		$input		 	= '<input' . $attrImploded . '/>';
+		$input		 	= sprintf($this->tags['input'], $attrImploded);
 
 		// return tag
 		return $input;
@@ -50,7 +60,7 @@ class tx_forms_basic {
 		$implodedAttr = $this->implodeAttributes($attr);
 		
 		// build textarea tag
-		$textarea	= '<textarea' . $implodedAttr . '>' . $value . '</textarea>';
+		$textarea	= sprintf($this->tags['textarea'], $implodedAttr, $value);
 		
 		// return textarea
 		return $textarea;
@@ -76,7 +86,7 @@ class tx_forms_basic {
 		$selectAttr = $this->implodeAttributes($selectAttr);
 		
 		// build beginning tag
-		$beginTag	= '<select' . $selectAttr . '>';
+		$beginTag	= sprintf($this->tags['selectbegin'], $selectAttr);
 	
 		// declare array that holds all the option tags
 		$optionTags = array();
@@ -99,11 +109,14 @@ class tx_forms_basic {
 			$optionsHere = $this->implodeAttributes($optionsHere);
 			
 			// build option tag			
-			$optionTags .= '<option value="' . $value . '"' . $optionsHere . '>' . $text . '</option>'; 
+			$optionTags[] = sprintf($this->tags['option'], $value, $optionsHere, $text); 
 		}
 		
+		// build option tags
+		$optionTags = implode('', $optionTags);
+		
 		// build end tag
-		$endTag 	= '</select>';
+		$endTag 	= $this->tags['selectend'];
 		
 		// return it all
 		return $beginTag . $optionTags . $endTag;
@@ -125,7 +138,7 @@ class tx_forms_basic {
 		$attr = $this->implodeAttributes($attr);
 		
 		// render tag
-		$checkbox = '<input type="checkbox"' . $attr . ' />';
+		$checkbox = sprintf($this->tags['checkbox'], $attr);
 		
 		// return it
 		return $checkbox;
@@ -160,12 +173,15 @@ class tx_forms_basic {
 			$attrHere = $this->implodeAttributes($attrHere);
 			
 			// render tag
-			$radioTags[] = '<input type="radio"' . $attrHere . ' />';
+			$radioTags[] = sprintf($this->tags['radio'], $attrHere);
 		
 		}
 		
+		// build radio tags
+		$radioTags = implode('', $radioTags);
+		
 		// return it
-		return implode(' ', $radioTags);
+		return $radioTags;
 	}
 
 
@@ -193,6 +209,46 @@ class tx_forms_basic {
 		// return the imploded value
 		return $implodedAttr;
 		
+	}
+	
+	function readConfig($file) {
+		
+		// read lines into an array
+		$linesArray = file($file);
+		
+		// declare array to hold tag template
+		$tags = array();
+		
+		// loop through the array and filter out unwanted stuff
+		foreach($linesArray as $line) {
+			$line = trim($line);
+			// get first character
+			$firstChar = substr($line, 0,1);
+			
+			// if it starts with ; or blank, we don't want it
+			if($firstChar != ';' && $firstChar != '') {
+				
+				// get position of delimiter
+				$delimiter = strpos($line, '=');
+				
+				// get key, the first part
+				$key = trim(substr($line, 0, $delimiter));
+				
+				// get value, the second part
+				$value = trim(substr($line, $delimiter+1));
+				
+				// if it's enclosed in ", remove them
+				if (substr($value, 0, 1) == '"' && substr($value, -1) == '"') {
+					$value = substr($value, 1, -1);
+				}
+				
+				// add it to tags array as key => value
+				$tags[$key] = $value;
+			}
+		}
+		
+		// return it
+		return $tags;
 	}
 }
 ?>
