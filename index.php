@@ -85,8 +85,8 @@ echo '<br />';
 
 // create custom tag field
 echo '<h3>custom tag, self enclosed</h3>';
-$tag 	= 'a';
-$attr	= array('href' => 'www.somewhere.com');
+$tag 	= 'img';
+$attr	= array('src' => 'http://www.w3.org/Icons/valid-xhtml11', 'alt' => 'Valid XHTML 1.1');
 echo $forms->tag($tag, $attr);
 echo '<br />';
 
