@@ -15,18 +15,24 @@ echo '<body>';
 echo '<div>';
 
 if(!empty($_POST)) {
-	echo '<h2>Post Vars (see source)</h2>';
-	print_r($_POST);	
+	echo '<h2>Post Vars</h2>';
+	echo '<pre>';
+	print_r($_POST);
+	echo '</pre>';	
 }
 
 if(!empty($_GET)) {
-	echo '<h2>GET Vars (see source)</h2>';
-	print_r($_GET);	
+	echo '<h2>GET Vars</h2>';
+	echo '<pre>';
+	print_r($_GET);
+	echo '</pre>';
 }
 
 if(!empty($_FILES)) {
-	echo '<h2>File Vars (see source)</h2>';
-	print_r($_FILES);	
+	echo '<h2>File Vars</h2>';
+	echo '<pre>';
+	print_r($_FILES);
+	echo '</pre>';	
 }
 
 
