@@ -10,6 +10,7 @@
 //****************************************************************
 
 // TODO: add some kind of error if name isn't given in the form building methods
+// TODO: add <label> tags; id = name, except for radio, id = name_1, etc.
 class tx_forms {
 	
 	var $fields;		// array of all the field objects
@@ -122,7 +123,6 @@ class tx_forms {
 	 * @param array $attr holds all attributes for each radio tag
 	 * @param string $checked value of the radio button that is to be selected
 	 * @param array $options array of options, or values.
-	 * TODO: need to figure something out with labels.
 	 */
 	function radio($attr, $checked, $options) {
 
@@ -217,7 +217,6 @@ class tx_forms {
 	 * @abstract renders the complete form
 	 * @return string complete form as html
 	 * 
-	 * TODO: add <form> stuff
 	 */
 	function render() {
 		
@@ -251,7 +250,6 @@ class tx_forms {
 	 * @param string $name name of the field to be rendered
 	 * @return string field as html
 	 * 
-	 * TODO: add form rendering
 	 */	
 	function renderSingle($name) {
 		
