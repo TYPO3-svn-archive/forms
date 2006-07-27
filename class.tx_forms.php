@@ -140,6 +140,20 @@ class tx_forms {
 		
 		$this->fields[$name] = new formHidden($attr);
 	}
+	
+	/**
+	 * @name file
+	 * @abstract renders a file form
+	 * @param array $attr associative array that defines the attributes inside the file field; it's not validated in any way.
+	 * 	
+	 */
+	function file($attr) {
+		
+		$name = $attr['name'];
+		
+		$this->fields[$name] = new formFile($attr);
+	}
+	
 
 	function render() {
 		

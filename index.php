@@ -89,6 +89,13 @@ $forms->hidden($attr);
 echo $forms->renderSingle('hidden');
 echo '<br />';
 
+// create file field
+echo '<h3>file field</h3>';
+$attr	 = array('name' => 'file');
+$forms->file($attr);
+echo $forms->renderSingle('file');
+echo '<br />';
+
 
 echo '</div></body></html>';
 ?>

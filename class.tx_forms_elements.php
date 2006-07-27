@@ -201,7 +201,11 @@ class formHidden extends formInput {
 }
 
 class formFile extends formInput {
-	
+	function formFile($attr) {
+		parent::formInput();
+		$this->attributes = $attr;
+		$this->attributes['type'] = 'file';
+	}
 }
 
 class formRadio extends formInput {
