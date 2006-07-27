@@ -13,7 +13,7 @@
 // TODO: file form
 class tx_forms {
 	
-	var $tags;		// associative array of form tags
+	var $fields;		// array of all the field objects
 
 //****************************************
 //************ constructor  **************
@@ -21,8 +21,8 @@ class tx_forms {
 
 	function tx_forms() {
 		
-		// get tags out of the template file
-		$this->tags = $this->readConfig('tags.ini.php');
+		// initialize fields array
+		$this->tags = array();
 	}
 	
 //****************************************
@@ -37,17 +37,9 @@ class tx_forms {
 	 */
 	function input($attr) {
 		
-		// check for type, and if not there, use 'text'
-		if(!isset($attr['type'])) $attr['type'] = 'text';
+		$name = $attr['name'];
 		
-		// implode $attr to add to input tag
-		$attrImploded 	= $this->implodeAttributes($attr);
-		
-		// build input tag
-		$input		 	= sprintf($this->tags['input'], $attrImploded);
-
-		// return tag
-		return $input;
+		$this->fields[$name] = new formText($attr);
 	}
 
 	/**
@@ -57,14 +49,9 @@ class tx_forms {
 	 */
 	function textarea($attr, $value) {
 		
-		// implode $attr to add to textarea tag
-		$implodedAttr = $this->implodeAttributes($attr);
+		$name = $attr['name'];
 		
-		// build textarea tag
-		$textarea	= sprintf($this->tags['textarea'], $implodedAttr, $value);
-		
-		// return textarea
-		return $textarea;
+		$this->fields[$name] = new formTextarea($attr, $value);
 	}
 
 	/**
@@ -77,51 +64,27 @@ class tx_forms {
 	 */
 	function select($selectAttr, $optionsAttr, $selected, $options) {
 		
-		// if the attributes for the option tags is null, make it
-		// an array so implodeAttributes() doesn't complain.
-		if($optionsAttr == null) {
-			$optionsAttr = array();
-		}
+		$name = $selectAttr['name'];
 		
-		// get the attributes for inclusion
-		$selectAttr = $this->implodeAttributes($selectAttr);
+		$this->fields[$name] = new formSelect($selectAttr, $optionsAttr, $selected, $options);
 		
-		// build beginning tag
-		$beginTag	= sprintf($this->tags['selectbegin'], $selectAttr);
-	
-		// declare array that holds all the option tags
-		$optionTags = array();
-		
-		// loop through all the options
-		foreach($options as $value => $text) {
-			
-			// make attributes unique from template given
-			$optionsHere = $optionsAttr;
-			
-			// if the current option tag is the selected, mark it so;
-			// if multiple ones are selected, check array for those.
-			if($selected !== null && $selected == $value) {
-				$optionsHere['selected'] = 'selected';
-			} else if(is_array($selected) && in_array($value, $selected)) {
-				$optionsHere['selected'] = 'selected';
-			}
-
-			// get attributes for inclusion
-			$optionsHere = $this->implodeAttributes($optionsHere);
-			
-			// build option tag			
-			$optionTags[] = sprintf($this->tags['option'], $value, $optionsHere, $text); 
-		}
-		
-		// build option tags
-		$optionTags = implode('', $optionTags);
-		
-		// build end tag
-		$endTag 	= $this->tags['selectend'];
-		
-		// return it all
-		return $beginTag . $optionTags . $endTag;
 	}
+	
+	/**
+	 * @name selectList
+	 * @abstract renders a select list form
+	 * @param array $selectAttr associative array that defines the attributes inside the select tag; it's not validated in any way.
+	 * @param array $optionsAttr associative array that defines attributes inside the option tags, also not validated. 
+	 * @param mixed $selected array of strings or single string that defines the selected options.
+	 * @param array $options associative array that defines the options as 'value'=>'Text' pairs
+	 */
+	function selectList($selectAttr, $optionsAttr, $selected, $options) {
+		
+		$selectAttr['multiple'] = 'multiple';
+		$this->select($selectAttr, $optionsAttr, $selected, $options);
+	
+	}
+	
 
 	/**
 	 * @name checkbox
@@ -248,32 +211,24 @@ class tx_forms {
 		return $tag;
 	}
 
+	function render() {
+		
+		$output = null;
+		foreach($this->fields as $field) {
+			$output .= $field->render();
+		}
+		return $output;
+	}
+	
+	function renderSingle($name) {
+		$field = $this->fields[$name];
+		//print_r($field);
+		return $field->render();
+	}
 
 //**********************************
 //******** Private methods  ********
 //**********************************
-
-	/**
-	 * @name implpdeAttributes
-	 * @abstract Takes an array and makes a space-separated list of parameters to include in the tag; $key = "$value".
-	 * @param array() $params associative array that is imploded
-	 */
-	function implodeAttributes($attr) {
-		
-		// initialize the returned value
-		$implodedAttr = null;
-
-		//loop through $params array and implode
-		foreach($attr as $key => $value) {
-			
-			// add new key-value pair to returned variable
-			$implodedAttr .= $key . '="' . $value . '" ';
-		}
-		
-		// return the imploded value
-		return $implodedAttr;
-		
-	}
 	
 	function readConfig($file) {
 		
@@ -315,4 +270,7 @@ class tx_forms {
 		return $tags;
 	}
 }
+
+include('class.tx_forms_elements.php');
+
 ?>
