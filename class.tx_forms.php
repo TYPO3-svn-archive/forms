@@ -224,6 +224,9 @@ class tx_forms {
 		// initialize output
 		$output = null;
 		
+		// check for enctype
+		$this->getEnctype();
+		
 		// get form attributes for inline
 		$attr = tx_forms_helper::implodeAttributes($this->attributes);
 		
@@ -256,6 +259,35 @@ class tx_forms {
 		$field = $this->fields[$name];
 
 		return $field->render();
+	}
+	
+//****************************************
+//********** private methods  ************
+//****************************************
+
+	/**
+	 * @name getEnctype
+	 * @return correct encoding type for the form
+	 * @abstract checks for a file form field and returns another encoding type if found
+	 */
+	function getEnctype() {
+		
+		// if enctype is already set, leave it
+		if(!empty($this->attributes['enctype'])) return;
+		
+		// initialize check var
+		$file = false;
+		
+		// loop through all the fields and check for class name.
+		// If file is present, change enctype
+		foreach($this->fields as $field) {
+			if(get_class($field) == 'formFile') {
+				$file = true;
+			}
+		}
+		
+		// interpret results
+		if($file == true) $this->attributes['enctype'] = 'multipart/form-data';	
 	}
 }
 

@@ -5,7 +5,7 @@
 //***************************************
 
 include('class.tx_forms.php');
-$attr = array('method' => 'get', 'action' => '#');
+$attr = array('method' => 'post', 'action' => '#');
 $forms 	= new tx_forms($attr);
 
 echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml11.dtd">' .
@@ -24,9 +24,9 @@ if(!empty($_GET)) {
 	print_r($_GET);	
 }
 
-if(!empty($_FILE)) {
+if(!empty($_FILES)) {
 	echo '<h2>File Vars (see source)</h2>';
-	print_r($_FILE);	
+	print_r($_FILES);	
 }
 
 
