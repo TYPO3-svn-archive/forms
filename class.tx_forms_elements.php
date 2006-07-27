@@ -53,10 +53,8 @@ class singlePartElement extends formElement {
 
 class multiPartElement extends formElement {
 	
-	function multiPartElement($attr){
-		parent::formElement($attr);
-		$this->elements = array();
-		
+	function multiPartElement(){
+		parent::formElement();		
 	}
 	
 	function render(){}
@@ -173,9 +171,10 @@ class formTextarea extends multiPartElement {
 	var $text;
 	
 	function formTextarea($attr, $text) {
+		parent::multiPartElement();
 		$this->text = $text;
+		$this->attributes = $attr;
 		$this->tag = 'textarea';
-		parent::multiPartElement($attr, $text);
 	}
 	
 	function render() {
