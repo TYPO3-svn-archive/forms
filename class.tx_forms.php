@@ -13,15 +13,24 @@
 class tx_forms {
 	
 	var $fields;		// array of all the field objects
+	var $attributes;	// attributes for the form itself
 
 //****************************************
 //************ constructor  **************
 //****************************************
 
-	function tx_forms() {
+	/**
+	 * @name tx_forms
+	 * @param array $attr assoc array of attributes that go directly into the form tag
+	 * @abstract creates a form object; takes an assoc array of attributes as argument
+	 */
+	function tx_forms($attr) {
 		
 		// initialize fields array
 		$this->tags = array();
+		
+		// make attributes global
+		$this->attributes = $attr;
 	}
 	
 //****************************************
@@ -168,6 +177,36 @@ class tx_forms {
 		// add new field to global array in form object
 		$this->fields[$name] = new formFile($attr);
 	}
+
+	/**
+	 * @name submit
+	 * @abstract renders a submit button
+	 * @param array $attr associative array that defines the attributes of the button; it's not validated in any way.
+	 * 	
+	 */
+	function submit($attr) {
+
+		// get the name from the attribute array
+		$name = $attr['name'];
+		
+		// add new field to global array in form object
+		$this->fields[$name] = new formSubmit($attr);
+	}
+	
+	/**
+	 * @name reset
+	 * @abstract renders a reset button
+	 * @param array $attr associative array that defines the attributes of the button; it's not validated in any way.
+	 * 	
+	 */
+	function reset($attr) {
+
+		// get the name from the attribute array
+		$name = $attr['name'];
+		
+		// add new field to global array in form object
+		$this->fields[$name] = new formReset($attr);
+	}
 	
 //****************************************
 //******** rendering methods  ************
@@ -185,11 +224,20 @@ class tx_forms {
 		// initialize output
 		$output = null;
 		
+		// get form attributes for inline
+		$attr = tx_forms_helper::implodeAttributes($this->attributes);
+		
+		// make first part of form
+		$output = '<form ' . $attr . '>';
+		
 		// loop through all the fields and call render
 		// method on each and add return value to output
 		foreach($this->fields as $field) {
 			$output .= $field->render();
 		}
+		
+		// append closing forms tag
+		$output .= '</form>';
 		
 		return $output;
 	}

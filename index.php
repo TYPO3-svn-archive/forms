@@ -5,13 +5,32 @@
 //***************************************
 
 include('class.tx_forms.php');
-$forms 	= new tx_forms;
+$attr = array('method' => 'get', 'action' => '#');
+$forms 	= new tx_forms($attr);
 
 echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml11.dtd">' .
 	'<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" dir="ltr">';
 echo '<head><title>Tag Test</title><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" /></head>';
 echo '<body>';
 echo '<div>';
+
+if(!empty($_POST)) {
+	echo '<h2>Post Vars (see source)</h2>';
+	print_r($_POST);	
+}
+
+if(!empty($_GET)) {
+	echo '<h2>GET Vars (see source)</h2>';
+	print_r($_GET);	
+}
+
+if(!empty($_FILE)) {
+	echo '<h2>File Vars (see source)</h2>';
+	print_r($_FILE);	
+}
+
+
+echo '<h1>Individual Fields</h1>';
 
 // create input tag
 echo '<h3>input tag [text]</h3>';
@@ -96,6 +115,23 @@ $forms->file($attr);
 echo $forms->renderSingle('file');
 echo '<br />';
 
+// create submit button
+echo '<h3>submit</h3>';
+$attr 	= array('name' => 'submit');
+$forms->submit($attr);
+echo $forms->renderSingle('submit');
+echo '<br />';
+
+// create reset button
+echo '<h3>reset</h3>';
+$attr 	= array('name' => 'reset');
+$forms->reset($attr);
+echo $forms->renderSingle('reset');
+echo '<br />';
+
+
+echo '<h1>Now a whole form</h1>';
+echo $forms->render();
 
 echo '</div></body></html>';
 ?>

@@ -102,21 +102,6 @@ class multiPartElement extends formElement {
 	*/
 }
 
-// form field
-class form extends multiPartElement {
-
-	// constructor
-	function form(){
-		
-		// call parent's constructor
-		parent::multiPartElement();
-		
-		// define tag for form tag...
-		$this->tag = 'form';
-	}
-	
-}
-
 // basic input class, extended by the different 
 // types. Also abstract.
 class formInput extends singlePartElement {
@@ -230,10 +215,38 @@ class selectOption extends multiPartElement {
 	}
 }
 
-// makes a button
-// TODO: divide into reset, submit?
-class formButton extends formInput {
+// makes a submit button
+class formSubmit extends formInput {
 	
+	// constructor
+	function formSubmit($attr) {
+		
+		// call parent's constructor
+		parent::formInput();
+		
+		// make attributes global
+		$this->attributes = $attr;
+		
+		// define type
+		$this->attributes['type'] = 'submit';
+	}
+}
+
+// makes a reset button
+class formReset extends formInput {
+	
+	// constructor
+	function formReset($attr) {
+		
+		// call parent's constructor
+		parent::formInput();
+		
+		// make attributes global
+		$this->attributes = $attr;
+		
+		// define type
+		$this->attributes['type'] = 'reset';
+	}
 }
 
 // shows a input type text field
