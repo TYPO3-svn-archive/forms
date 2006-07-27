@@ -10,7 +10,7 @@
 //****************************************************************
 
 // TODO: add some kind of error if name isn't given in the form building methods
-// TODO: add <label> tags; id = name, except for radio, id = name_1, etc.
+// TODO: add <label> tags; id = name, except for radio, id = name_
 class tx_forms {
 	
 	var $fields;		// array of all the field objects

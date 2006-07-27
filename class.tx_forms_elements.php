@@ -9,6 +9,7 @@
 //****************************************************************
 
 // TODO: do we need the addElement() methods??
+// TODO: fix option tag: needs value!!
 
 // define single, self-closing tag and normal tag
 // for use with sprintf
