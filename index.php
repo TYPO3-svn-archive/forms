@@ -15,7 +15,7 @@ echo '<div>';
 
 // create input tag
 echo '<h3>input tag [text]</h3>';
-$attr 	= array('name' => 'texttest', 'type' => 'text');
+$attr 	= array('name' => 'texttest');
 $forms->input($attr);
 echo $forms->renderSingle('texttest');
 echo '<br />';
@@ -52,14 +52,16 @@ $forms->textarea($attr, $value);
 echo $forms->renderSingle('textarea');
 
 echo '<br />';
-/*
+
 // create checkbox
 echo '<h3>checkbox</h3>';
 $attr	= array('name' => 'checkbox');
 $checked= true;
 echo 'Some label:';
-echo $forms->checkbox($attr, $checked);
+$forms->checkbox($attr, $checked);
+echo $forms->renderSingle('checkbox');
 echo '<br />';
+
 
 // create radiobuttons
 echo '<h3>radio buttons</h3>';
@@ -67,36 +69,26 @@ $attr	 = array('name' => 'radio_buttons');
 $checked = 'third';
 $options = array('first', 'second', 'third', 'fourth');
 
-echo $forms->radio($attr, $checked, $options);
+$forms->radio($attr, $checked, $options);
+echo $forms->renderSingle('radio_buttons');
 echo '<br />';
+
 
 // create password field
 echo '<h3>password field</h3>';
 $attr	 = array('name' => 'password', 'value'=>'somePass');
-echo $forms->password($attr);
+$forms->password($attr);
+echo $forms->renderSingle('password');
 echo '<br />';
+
 
 // create hidden field
 echo '<h3>hidden field (check source, obviously :))</h3>';
 $attr	 = array('name' => 'hidden', 'value'=>'someHiddenValue');
-echo $forms->hidden($attr);
+$forms->hidden($attr);
+echo $forms->renderSingle('hidden');
 echo '<br />';
 
-// create custom tag field
-echo '<h3>custom tag with closing tag</h3>';
-$tag 	= 'div';
-$attr	= array('id' => 'someDiv');
-$filling= 'Content between the tags';
-echo $forms->tag($tag, $attr, $filling);
-echo '<br />';
-
-// create custom tag field
-echo '<h3>custom tag, self enclosed</h3>';
-$tag 	= 'img';
-$attr	= array('src' => 'http://www.w3.org/Icons/valid-xhtml11', 'alt' => 'Valid XHTML 1.1');
-echo $forms->tag($tag, $attr);
-echo '<br />';
-*/
 
 echo '</div></body></html>';
 ?>

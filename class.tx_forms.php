@@ -9,7 +9,6 @@
 //* 
 //****************************************************************
 
-// TODO: make objects of the fields
 // TODO: file form
 class tx_forms {
 	
@@ -94,19 +93,10 @@ class tx_forms {
 	 */
 	function checkbox($attr, $checked = false) {
 		
-		// if it should be checked, do so now, but only if
-		// it hasn't been defined in $attr
-		if($checked && !isset($attr['checked'])) $attr['checked'] = 'checked';
+		$name = $attr['name'];
 		
-		// get attributes for inclusion
-		$attr = $this->implodeAttributes($attr);
-		
-		// render tag
-		$checkbox = sprintf($this->tags['checkbox'], $attr);
-		
-		// return it
-		return $checkbox;
-		
+		$this->fields[$name] = new formCheckbox($attr, $checked);
+	
 	}
 	
 	/**
@@ -115,37 +105,14 @@ class tx_forms {
 	 * @param array $attr holds all attributes for each radio tag
 	 * @param string $checked value of the radio button that is to be selected
 	 * @param array $options array of options, or values.
-	 * TODO: see on top, need to figure something out with labels. Maybe only render one radio button?
+	 * TODO: see on top, need to figure something out with labels.
 	 */
 	function radio($attr, $checked, $options) {
 		
-		// declare output variable
-		$radioTags = array();
+		$name = $attr['name'];
 		
-		// loop through all options and render tags
-		foreach($options as $value) {		
-			
-			// make attributes unique for this tag
-			$attrHere = $attr;
-			
-			// if selected, determine that now
-			if($value == $checked) {
-				$attrHere['checked'] = 'checked';	
-			}
-					
-			// get attributes for inclusion
-			$attrHere = $this->implodeAttributes($attrHere);
-			
-			// render tag
-			$radioTags[] = sprintf($this->tags['radio'], $attrHere);
-		
-		}
-		
-		// build radio tags
-		$radioTags = implode('', $radioTags);
-		
-		// return it
-		return $radioTags;
+		$this->fields[$name] = new formRadio($attr, $checked, $options);
+
 	}
 	
 	/**
@@ -156,14 +123,9 @@ class tx_forms {
 	 */
 	function password($attr) {
 		
-		// implode $attr to add to input tag
-		$attrImploded 	= $this->implodeAttributes($attr);
+		$name = $attr['name'];
 		
-		// build input tag
-		$password	 	= sprintf($this->tags['password'], $attrImploded);
-
-		// return tag
-		return $password;
+		$this->fields[$name] = new formPassword($attr);
 	}
 	
 	/**
@@ -174,41 +136,9 @@ class tx_forms {
 	 */
 	function hidden($attr) {
 
-		// implode $attr to add to input tag
-		$attrImploded 	= $this->implodeAttributes($attr);
+		$name = $attr['name'];
 		
-		// build input tag
-		$hidden		 	= sprintf($this->tags['hidden'], $attrImploded);
-
-		// return tag
-		return $hidden;
-	}
-	
-	/**
-	 * @name tag
-	 * @abstract renders a general tag
-	 * @param string $tag name of the tag (i.e. a,div, etc).
-	 * @param array $attr associative array that defines the attributes inside the tag; it's not validated in any way.
-	 * @param string $filling if set, the tag will have an end tag with the $filling in between.
-	 */
-	function tag($tag, $attr = array(), $filling = null) {
-		
-		// make sure $attr is an array
-		if (!is_array($attr))
-			$attr = array ();
-		
-		// get attributes for inclusion
-		$implodedAttr = $this->implodeAttributes($attr);
-		
-		// check whether or not the tag should be self enclosed
-		if($filling != null) {
-			$tag = sprintf($this->tags['tag'], $tag, $implodedAttr, $filling);
-		} else {
-			$tag = sprintf($this->tags['tagse'], $tag, $implodedAttr);
-		}
-		
-		// return it
-		return $tag;
+		$this->fields[$name] = new formHidden($attr);
 	}
 
 	function render() {
@@ -224,50 +154,6 @@ class tx_forms {
 		$field = $this->fields[$name];
 		//print_r($field);
 		return $field->render();
-	}
-
-//**********************************
-//******** Private methods  ********
-//**********************************
-	
-	function readConfig($file) {
-		
-		// read lines into an array
-		$linesArray = file($file);
-		
-		// declare array to hold tag template
-		$tags = array();
-		
-		// loop through the array and filter out unwanted stuff
-		foreach($linesArray as $line) {
-			$line = trim($line);
-			// get first character
-			$firstChar = substr($line, 0,1);
-			
-			// if it starts with ; or blank, we don't want it
-			if($firstChar != ';' && $firstChar != '') {
-				
-				// get position of delimiter
-				$delimiter = strpos($line, '=');
-				
-				// get key, the first part
-				$key = trim(substr($line, 0, $delimiter));
-				
-				// get value, the second part
-				$value = trim(substr($line, $delimiter+1));
-				
-				// if it's enclosed in ", remove them
-				if (substr($value, 0, 1) == '"' && substr($value, -1) == '"') {
-					$value = substr($value, 1, -1);
-				}
-				
-				// add it to tags array as key => value
-				$tags[$key] = $value;
-			}
-		}
-		
-		// return it
-		return $tags;
 	}
 }
 
