@@ -9,7 +9,6 @@
 //****************************************************************
 
 // TODO: do we need the addElement() methods??
-// TODO: fix option tag: needs value!!
 
 // define single, self-closing tag and normal tag
 // for use with sprintf
@@ -177,6 +176,9 @@ class formSelect extends multiPartElement {
 			
 			// make attributes unique from template given
 			$optionsHere = $optionsAttr;
+			
+			// add value to array
+			$optionsHere['value'] = $value;
 			
 			// if the current option tag is the selected, mark it so;
 			// if multiple ones are selected, check array for those.

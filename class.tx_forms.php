@@ -11,6 +11,7 @@
 
 // TODO: add some kind of error if name isn't given in the form building methods
 // TODO: add <label> tags; id = name, except for radio, id = name_1
+// TODO: rewrite radio button, move logic out of elements and into here; use loop.
 class tx_forms {
 	
 	var $fields;		// array of all the field objects
@@ -284,6 +285,9 @@ class tx_forms {
 		// method on each and add return value to output
 		foreach($this->fields as $field) {
 			$output .= $field->render();
+			
+			// TODO: need some default formatting for forms rendered like this
+			$output .= '<br />';
 		}
 		
 		// append closing forms tag

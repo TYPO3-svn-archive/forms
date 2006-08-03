@@ -10,7 +10,9 @@ $forms 	= new tx_forms($attr);
 
 echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml11.dtd">' .
 	'<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" dir="ltr">';
-echo '<head><title>Tag Test</title><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" /></head>';
+echo '<head><title>Tag Test</title><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />';
+echo '<link rel="stylesheet" type="text/css" href="styles.css" />';
+echo '</head>';
 echo '<body>';
 echo '<div>';
 
