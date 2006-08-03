@@ -10,7 +10,6 @@
 //****************************************************************
 
 // TODO: add some kind of error if name isn't given in the form building methods
-// TODO: add <label> tags; id = name, except for radio, id = name_1
 // TODO: rewrite radio button, move logic out of elements and into here; use loop.
 class tx_forms {
 	
