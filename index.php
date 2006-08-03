@@ -41,7 +41,8 @@ echo '<h1>Individual Fields</h1>';
 // create input tag
 echo '<h3>input tag [text]</h3>';
 $attr 	= array('name' => 'texttest');
-$forms->input($attr);
+$label = 'text test:';
+$forms->input($attr, $label);
 echo $forms->renderSingle('texttest');
 echo '<br />';
 
@@ -51,8 +52,9 @@ $selectAttr 	= array('name' => 'selectsingle');
 $optionsAttr 	= null;
 $options 		= array('test1' => 'Test1', 'test2' => 'Test2', 'test3' => 'Test3', 'test4' => 'Test4');
 $selected 		= 'test2';
+$label 			= 'select single:';
 
-$forms->select($selectAttr, $optionsAttr, $selected, $options);
+$forms->select($selectAttr, $optionsAttr, $selected, $options, $label);
 echo $forms->renderSingle('selectsingle');
 echo '<br />';
 
@@ -62,8 +64,9 @@ $selectAttr 	= array('name' => 'selectmultiple', 'size'=>6);
 $optionsAttr 	= null;
 $options 		= array('test1' => 'Test1', 'test2' => 'Test2', 'test3' => 'Test3', 'test4' => 'Test4');
 $selected 		= array('test2', 'test4');
+$label 			= 'select multiple:';
 
-$forms->selectList($selectAttr, $optionsAttr, $selected, $options);
+$forms->selectList($selectAttr, $optionsAttr, $selected, $options, $label);
 echo $forms->renderSingle('selectmultiple');
 echo '<br />';
 
@@ -72,8 +75,9 @@ echo '<br />';
 echo '<h3>textarea</h3>';
 $attr 	= array('name' => 'textarea', 'cols'=> 25, 'rows'=> 10);
 $value 	= 'This is some example text for this great textarea!!!';
+$label  = 'text area:';
 
-$forms->textarea($attr, $value);
+$forms->textarea($attr, $value, $label);
 echo $forms->renderSingle('textarea');
 
 echo '<br />';
@@ -82,8 +86,9 @@ echo '<br />';
 echo '<h3>checkbox</h3>';
 $attr	= array('name' => 'checkbox');
 $checked= true;
-echo 'Some label:';
-$forms->checkbox($attr, $checked);
+$label  = 'checkbox:';
+
+$forms->checkbox($attr, $checked, $label);
 echo $forms->renderSingle('checkbox');
 echo '<br />';
 
@@ -93,8 +98,9 @@ echo '<h3>radio buttons</h3>';
 $attr	 = array('name' => 'radio_buttons');
 $checked = 'third';
 $options = array('first', 'second', 'third', 'fourth');
+$label = 'bla';
 
-$forms->radio($attr, $checked, $options);
+$forms->radio($attr, $checked, $options, $label);
 echo $forms->renderSingle('radio_buttons');
 echo '<br />';
 
@@ -102,7 +108,9 @@ echo '<br />';
 // create password field
 echo '<h3>password field</h3>';
 $attr	 = array('name' => 'password', 'value'=>'somePass');
-$forms->password($attr);
+$label   = 'password:';
+
+$forms->password($attr, $label);
 echo $forms->renderSingle('password');
 echo '<br />';
 
@@ -117,7 +125,9 @@ echo '<br />';
 // create file field
 echo '<h3>file field</h3>';
 $attr	 = array('name' => 'file');
-$forms->file($attr);
+$label   = 'file:';
+
+$forms->file($attr, $label);
 echo $forms->renderSingle('file');
 echo '<br />';
 

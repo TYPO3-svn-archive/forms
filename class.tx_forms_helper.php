@@ -28,5 +28,11 @@ class tx_forms_helper {
 		return $implodedAttr;
 		
 	}
+	
+	function debug($array) {	
+		echo '<pre>';
+		print_r($array);
+		echo '</pre>';
+	}
 }
 ?>

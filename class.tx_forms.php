@@ -44,10 +44,17 @@ class tx_forms {
 	 * @param array $attr associative array that defines the attributes inside the input tag; it's not validated in any way.
 	 * 	
 	 */
-	function input($attr) {
+	function input($attr, $label) {
 
 		// get the name from the attribute array	
 		$name = $attr['name'];
+		$nameLabel = $name . '-label';
+		
+		// check for id, if not there, use name
+		if (!isset($attr['id'])) $attr['id'] = $name; 
+		
+		// build label
+		$this->fields[$nameLabel] = new label($attr['id'], $label, array('id' => $attr['id'] . '-label'));
 
 		// add new field to global array in form object		
 		$this->fields[$name] = new formText($attr);
@@ -58,10 +65,17 @@ class tx_forms {
 	 * @abstract renders a textarea form
 	 * @param array $attr associative array that defines the attributes inside the input tag; it's not validated in any way.
 	 */
-	function textarea($attr, $value) {
+	function textarea($attr, $value, $label) {
 
-		// get the name from the attribute array		
+		// get the name from the attribute array	
 		$name = $attr['name'];
+		$nameLabel = $name . '-label';
+		
+		// check for id, if not there, use name
+		if (!isset($attr['id'])) $attr['id'] = $name; 
+		
+		// build label
+		$this->fields[$nameLabel] = new label($attr['id'], $label, array('id' => $attr['id'] . '-label'));
 
 		// add new field to global array in form object		
 		$this->fields[$name] = new formTextarea($attr, $value);
@@ -75,11 +89,17 @@ class tx_forms {
 	 * @param mixed $selected array of strings or single string that defines the selected options.
 	 * @param array $options associative array that defines the options as 'value'=>'Text' pairs
 	 */
-	function select($selectAttr, $optionsAttr, $selected, $options) {
+	function select($selectAttr, $optionsAttr, $selected, $options, $label) {
 
 		// get the name from the attribute array		
 		$name = $selectAttr['name'];
-
+		$nameLabel = $name . '-label';
+		
+		// check for id, if not there, use name
+		if (!isset($attr['id'])) $attr['id'] = $name; 
+		
+		// build label
+		$this->fields[$nameLabel] = new label($attr['id'], $label, array('id' => $attr['id'] . '-label'));
 		// add new field to global array in form object	
 		$this->fields[$name] = new formSelect($selectAttr, $optionsAttr, $selected, $options);
 	}
@@ -92,13 +112,13 @@ class tx_forms {
 	 * @param mixed $selected array of strings or single string that defines the selected options.
 	 * @param array $options associative array that defines the options as 'value'=>'Text' pairs
 	 */
-	function selectList($selectAttr, $optionsAttr, $selected, $options) {
+	function selectList($selectAttr, $optionsAttr, $selected, $options, $label) {
 
 		// get the name from the attribute array		
 		$selectAttr['multiple'] = 'multiple';
 
 		// add new field to global array in form object
-		$this->select($selectAttr, $optionsAttr, $selected, $options);
+		$this->select($selectAttr, $optionsAttr, $selected, $options, $label);
 	}
 	
 
@@ -108,10 +128,17 @@ class tx_forms {
 	 * @param array $attr attributes of the tag
 	 * @param boolean $checked whether or not the checkbox is checked
 	 */
-	function checkbox($attr, $checked = false) {
+	function checkbox($attr, $checked = false, $label) {
 	
-		// get the name from the attribute array
+		// get the name from the attribute array	
 		$name = $attr['name'];
+		$nameLabel = $name . '-label';
+		
+		// check for id, if not there, use name
+		if (!isset($attr['id'])) $attr['id'] = $name; 
+		
+		// build label
+		$this->fields[$nameLabel] = new label($attr['id'], $label, array('id' => $attr['id'] . '-label'));
 		
 		// add new field to global array in form object
 		$this->fields[$name] = new formCheckbox($attr, $checked);
@@ -124,10 +151,17 @@ class tx_forms {
 	 * @param string $checked value of the radio button that is to be selected
 	 * @param array $options array of options, or values.
 	 */
-	function radio($attr, $checked, $options) {
+	function radio($attr, $checked, $options, $label) {
 
 		// get the name from the attribute array	
 		$name = $attr['name'];
+		$nameLabel = $name . '-label';
+		
+		// check for id, if not there, use name
+		if (!isset($attr['id'])) $attr['id'] = $name; 
+		
+		// build label
+		$this->fields[$nameLabel] = new label($attr['id'], $label, array('id' => $attr['id'] . '-label'));
 		
 		// add new field to global array in form object
 		$this->fields[$name] = new formRadio($attr, $checked, $options);
@@ -139,10 +173,17 @@ class tx_forms {
 	 * @param array $attr associative array that defines the attributes inside the password tag; it's not validated in any way.
 	 * 	
 	 */
-	function password($attr) {
+	function password($attr, $label) {
 
 		// get the name from the attribute array	
 		$name = $attr['name'];
+		$nameLabel = $name . '-label';
+		
+		// check for id, if not there, use name
+		if (!isset($attr['id'])) $attr['id'] = $name; 
+		
+		// build label
+		$this->fields[$nameLabel] = new label($attr['id'], $label, array('id' => $attr['id'] . '-label'));
 
 		// add new field to global array in form object		
 		$this->fields[$name] = new formPassword($attr);
@@ -156,7 +197,7 @@ class tx_forms {
 	 */
 	function hidden($attr) {
 
-		// get the name from the attribute array
+		// get the name from the attribute array	
 		$name = $attr['name'];
 		
 		// add new field to global array in form object
@@ -169,10 +210,17 @@ class tx_forms {
 	 * @param array $attr associative array that defines the attributes inside the file field; it's not validated in any way.
 	 * 	
 	 */
-	function file($attr) {
+	function file($attr, $label) {
 		
-		// get the name from the attribute array
+		// get the name from the attribute array	
 		$name = $attr['name'];
+		$nameLabel = $name . '-label';
+		
+		// check for id, if not there, use name
+		if (!isset($attr['id'])) $attr['id'] = $name; 
+		
+		// build label
+		$this->fields[$nameLabel] = new label($attr['id'], $label, array('id' => $attr['id'] . '-label'));
 		
 		// add new field to global array in form object
 		$this->fields[$name] = new formFile($attr);
@@ -253,10 +301,21 @@ class tx_forms {
 	 */	
 	function renderSingle($name) {
 		
+		// initialize output variable
+		$output = null;
+		
 		// get field object by name
 		$field = $this->fields[$name];
-
-		return $field->render();
+		
+		if(isset($this->fields[$name . '-label'])) {
+			$label 	= $this->fields[$name . '-label'];
+			$output.= $label->render();	
+		}
+		
+		$output .= $field->render();
+		
+		
+		return $output;
 	}
 	
 //****************************************

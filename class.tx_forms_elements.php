@@ -76,6 +76,35 @@ class singlePartElement extends formElement {
 	}	
 }
 
+// defines label
+class label extends multiPartElement {
+	
+	var $label;
+	
+	// call constructor
+	function label($for, $label, $attr) {
+		
+		// call parent's constructor
+		parent::multiPartElement();
+		
+		$this->tag = 'label';
+		$this->label = $label;
+		$attr['for'] = $for;
+		$this->attributes = $attr;
+	}
+	
+	// render
+	function render() {
+		
+		// implode attributes to inline html
+		$attr = tx_forms_helper::implodeAttributes($this->attributes);
+		
+		// substitute tag and attributes in field blueprint defined at
+		// the top; then return
+		$output = sprintf(TAG, $this->tag, $attr, $this->label);
+		return $output;
+	}
+}
 // multi part element, like <select>bla</select>
 // also abstract
 class multiPartElement extends formElement {
