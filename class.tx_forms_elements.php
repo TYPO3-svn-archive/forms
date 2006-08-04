@@ -23,7 +23,11 @@ class formElement {
 	var $attributes;
 	var $tag;
 
-	// constructor
+	/*
+	 * @name formElement
+	 * @abstract constructor of basic class for a single form element
+	 * @param [none]
+	 */
 	function formElement(){
 		
 		// initialize attributes
@@ -43,6 +47,11 @@ class formElement {
 	*/
 	
 	// basic render method. Needs to be overridden
+	/*
+	 * @name render
+	 * @abstract basic render method. Needs to be overridden
+	 * @param [none]
+	 */
 	function render(){
 		echo 'You need to override this method!';	
 		
@@ -54,7 +63,11 @@ class formElement {
 // also abstract
 class singlePartElement extends formElement {
 			
-	// constructor
+	/*
+	 * @name singlePartElement
+	 * @abstract constructor
+	 * @param [none]
+	 */
 	function singlePartElement() {
 		
 		// call parent's constructor
@@ -63,6 +76,11 @@ class singlePartElement extends formElement {
 	
 	// renders a basic single element tag. Used by most of the
 	// input type fields since it's the same
+	/*
+	 * @name singlePartElement
+	 * @abstract constructor
+	 * @param [none]
+	 */
 	function render(){
 		
 		// implode attributes to inline html
@@ -80,7 +98,13 @@ class label extends multiPartElement {
 	
 	var $label;
 	
-	// call constructor
+	/*
+	 * @name label
+	 * @abstract constructor, creates label properties
+	 * @param string $for
+	 * @param string $label
+	 * @param array $attr //QUESTION what should this array contain?
+	 */
 	function label($for, $label, $attr) {
 		
 		// call parent's constructor
@@ -92,7 +116,11 @@ class label extends multiPartElement {
 		$this->attributes = $attr;
 	}
 	
-	// render
+	/*
+	 * @name render
+	 * @abstract renders XHTML of label
+	 * @param [none]
+	 */
 	function render() {
 		
 		// implode attributes to inline html
@@ -108,7 +136,11 @@ class label extends multiPartElement {
 // also abstract
 class multiPartElement extends formElement {
 	
-	// constructor
+	/*
+	 * @name multiPartElement
+	 * @abstract calls parent contstructor
+	 * @param [none]
+	 */
 	function multiPartElement(){
 		
 		// call parent's constructor
