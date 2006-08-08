@@ -96,10 +96,10 @@ class tx_forms {
 		$nameLabel = $name . '-label';
 		
 		// check for id, if not there, use name
-		if (!isset($attr['id'])) $attr['id'] = $name; 
+		if (!isset($selectAttr['id'])) $selectAttr['id'] = $name; 
 		
 		// build label
-		$this->fields[$nameLabel] = new label($attr['id'], $label, array('id' => $attr['id'] . '-label'));
+		$this->fields[$nameLabel] = new label($selectAttr['id'], $label, array('id' => $selectAttr['id'] . '-label'));
 		// add new field to global array in form object	
 		$this->fields[$name] = new formSelect($selectAttr, $optionsAttr, $selected, $options);
 	}
@@ -150,6 +150,7 @@ class tx_forms {
 	 * @param array $attr holds all attributes for each radio tag
 	 * @param string $checked value of the radio button that is to be selected
 	 * @param array $options array of options, or values.
+	 * TODO: figure out a label for a group of radio buttons
 	 */
 	function radio($attr, $checked, $options, $label) {
 
@@ -161,7 +162,7 @@ class tx_forms {
 		if (!isset($attr['id'])) $attr['id'] = $name; 
 		
 		// build label
-		$this->fields[$nameLabel] = new label($attr['id'], $label, array('id' => $attr['id'] . '-label'));
+		//$this->fields[$nameLabel] = new label($attr['id'], $label, array('id' => $attr['id'] . '-label'));
 		
 		// add new field to global array in form object
 		$this->fields[$name] = new formRadio($attr, $checked, $options);
@@ -279,6 +280,7 @@ class tx_forms {
 		
 		// make first part of form
 		$output = '<form ' . $attr . '>';
+		$output .= '<fieldset>';
 		
 		// loop through all the fields and call render
 		// method on each and add return value to output
@@ -290,6 +292,7 @@ class tx_forms {
 		}
 		
 		// append closing forms tag
+		$output .= '</fieldset>';
 		$output .= '</form>';
 		
 		return $output;
