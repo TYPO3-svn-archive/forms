@@ -103,7 +103,7 @@ class label extends multiPartElement {
 	 * @abstract constructor, creates label properties
 	 * @param string $for
 	 * @param string $label
-	 * @param array $attr //QUESTION what should this array contain?
+	 * @param array $attr e.g. array('id' => 'someId', 'onmouseover' => 'draw();');
 	 */
 	function label($for, $label, $attr) {
 		
