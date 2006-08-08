@@ -12,8 +12,8 @@
 
 // define single, self-closing tag and normal tag
 // for use with sprintf
-define('SETAG', '<%s %s />');
-define('TAG', '<%1$s %2$s>%3$s</%1$s>');
+define('SETAG', '<%s %s />'."\n");
+define('TAG', '<%1$s %2$s>'."\n".'%3$s</%1$s>'."\n");
 
 // basic abstract form class
 class formElement {
