@@ -10,7 +10,7 @@
 //****************************************************************
 
 // TODO: add some kind of error if name isn't given in the form building methods
-// TODO: rewrite radio button, move logic out of elements and into here; use loop.
+// TODO: need to make sure forms are XHTML compliant, which they aren't yet. Labels' fault.
 class tx_forms {
 	
 	var $fields;		// array of all the field objects

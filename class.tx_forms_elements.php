@@ -407,6 +407,7 @@ class formFile extends formInput {
 }
 
 // makes a radio button
+// TODO: make sure this is a good way to make the field
 class formRadio extends formInput {
 	
 	// need extra vars: whether it's checked, 
