@@ -433,25 +433,36 @@ class formRadio extends formInput {
 		// declare output variable
 		$radioTags = array();
 		
+		$tagNumber = 1;
+		
 		// loop through all options and render tags
 		foreach($this->elements as $value) {		
 			
 			// make attributes unique for this tag
 			$attrHere = $this->attributes;
 			
+			// change id for this radio button
+			$attrHere['id'] = $attrHere['id'] . '-' . $tagNumber;
+
 			// add value attribute
-			$attrHere['value'] = $value;
+			$attrHere['value'] = $value[0];
 			
 			// if selected, determine that now
-			if($value == $this->checked) {
+			if($value[0] == $this->checked) {
 				$attrHere['checked'] = 'checked';	
 			}
 					
+			// create label for this radio button
+			$label = new label($attrHere['id'], $value[1], array('id' => $attrHere['id'] . '-label'));
+			$label = $label->render();
+			$tagNumber ++;
+			
+			
 			// get attributes for inclusion
 			$attrHere = tx_forms_helper::implodeAttributes($attrHere);
 			
 			// render tag
-			$radioTags[] = sprintf(SETAG, $this->tag, $attrHere);
+			$radioTags[] = $label . sprintf(SETAG, $this->tag, $attrHere);
 		
 		}
 		
