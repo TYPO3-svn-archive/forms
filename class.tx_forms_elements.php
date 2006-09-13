@@ -23,7 +23,7 @@ class formElement {
 	var $attributes;
 	var $tag;
 
-	/*
+	/**
 	 * @name formElement
 	 * @abstract constructor of basic class for a single form element
 	 * @param [none]
@@ -136,7 +136,7 @@ class label extends multiPartElement {
 // also abstract
 class multiPartElement extends formElement {
 	
-	/*
+	/**
 	 * @name multiPartElement
 	 * @abstract calls parent contstructor
 	 * @param [none]
@@ -505,6 +505,38 @@ class formCheckbox extends formInput {
 	}
 }
 
+class legend extends multiPartElement {
+	
+	var $components;
+	
+	function legend() {
+		parent::multiPartElement();
+		$components = array();
+		$this->tag = 'legend';
+		
+	}
+	
+	function add($component) {
+		
+		$components[] = $component;
+	}
+}
+
+class fieldset extends multiPartElement {
+	
+	var $components;
+	
+	function fieldset() {
+		parent::multiPartElement();
+		$components = array();
+		$this->tag = 'fieldset';
+	}
+	
+	function add($component) {
+		
+		$components[] = $component;
+	}
+}
 // include the helper class
 include('class.tx_forms_helper.php');
 ?>
