@@ -511,7 +511,7 @@ class legend extends multiPartElement {
 	
 	function legend() {
 		parent::multiPartElement();
-		$components = array();
+		$this->components = array();
 		$this->tag = 'legend';
 		
 	}
@@ -528,13 +528,25 @@ class fieldset extends multiPartElement {
 	
 	function fieldset() {
 		parent::multiPartElement();
-		$components = array();
+		$this->components = array();
 		$this->tag = 'fieldset';
 	}
 	
 	function add($component) {
 		
 		$components[] = $component;
+	}
+	
+	function render() {
+		
+		// implode attributes to inline html
+		$attr = tx_forms_helper::implodeAttributes($this->attributes);
+		
+		foreach ($this->components as $comp) {
+			$filling .= $comp->render();
+		}
+		
+		$output = sprintf(TAG, $this->tag, $attr, $filling);
 	}
 }
 // include the helper class
