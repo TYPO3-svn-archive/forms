@@ -505,29 +505,14 @@ class formCheckbox extends formInput {
 	}
 }
 
-class legend extends multiPartElement {
-	
-	var $components;
-	
-	function legend() {
-		parent::multiPartElement();
-		$this->components = array();
-		$this->tag = 'legend';
-		
-	}
-	
-	function add($component) {
-		
-		$components[] = $component;
-	}
-}
-
 class fieldset extends multiPartElement {
 	
 	var $components;
+	var $legend;
 	
-	function fieldset() {
+	function fieldset($legend) {
 		parent::multiPartElement();
+		$this->legend = $legend;
 		$this->components = array();
 		$this->tag = 'fieldset';
 	}
@@ -541,6 +526,7 @@ class fieldset extends multiPartElement {
 		
 		// implode attributes to inline html
 		$attr = tx_forms_helper::implodeAttributes($this->attributes);
+		$filling = sprintf(TAG,'legend', null, this->legend);
 		
 		foreach ($this->components as $comp) {
 			$filling .= $comp->render();
