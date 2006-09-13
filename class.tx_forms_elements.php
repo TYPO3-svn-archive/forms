@@ -505,34 +505,50 @@ class formCheckbox extends formInput {
 	}
 }
 
-class fieldset extends multiPartElement {
-	
+class container extends multiPartElement {
 	var $components;
-	var $legend;
 	
-	function fieldset($legend) {
+	function container() {
 		parent::multiPartElement();
-		$this->legend = $legend;
 		$this->components = array();
-		$this->tag = 'fieldset';
 	}
 	
 	function add($component) {
 		
-		$components[] = $component;
+		$this->components[] = $component;
 	}
 	
 	function render() {
-		
+		die('Need to subclass render() method in container children');
+	}
+}
+
+class fieldset extends container {
+	
+	var $legend;
+	
+	function fieldset($legend, $attr) {
+		parent::container();
+		$this->legend = $legend;
+		$this->tag = 'fieldset';
+		$this->attributes = $attr;
+	}
+	
+
+	
+	function render() {
+
 		// implode attributes to inline html
 		$attr = tx_forms_helper::implodeAttributes($this->attributes);
-		$filling = sprintf(TAG,'legend', null, this->legend);
+		$filling = sprintf(TAG,'legend', null, $this->legend);
 		
 		foreach ($this->components as $comp) {
 			$filling .= $comp->render();
 		}
 		
 		$output = sprintf(TAG, $this->tag, $attr, $filling);
+		
+		return $output;
 	}
 }
 // include the helper class

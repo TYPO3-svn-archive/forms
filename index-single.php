@@ -5,6 +5,7 @@
 //***************************************
 
 include('class.tx_forms.php');
+include_once('class.tx_forms_elements.php');
 $attr = array('method' => 'post', 'action' => '#');
 $forms 	= new tx_forms($attr);
 
@@ -126,5 +127,27 @@ $forms->reset($attr);
 echo $forms->renderSingle('reset');
 echo '<br />';
 
+// fieldset test
+$attr = array('name' => 'fieldset');
+$legend = 'some legend here';
+$oneset = new fieldset($legend, $attr);
+
+$attr	= array('name' => 'checkbox1', 'id' => 'checkbox1');
+$checked= true;
+$label  = 'checkbox:';
+
+$check = new formCheckbox($attr, $checked, $label);
+
+$attr	 = array('name' => 'radio_buttons1', 'id' => 'radio_buttons1');
+$checked = 'third';
+$options = array(array('first', 'First Label'), array('second', 'Second label'),
+	 array('third', 'Third Label'), array('fourth', 'Fourth Label'));
+$label = 'bla: ';
+
+$radio = new formRadio($attr, $checked, $options, $label);
+$oneset->add($check);
+$oneset->add($radio);
+
+echo $oneset->render();
 echo '</div></body></html>';
 ?>
